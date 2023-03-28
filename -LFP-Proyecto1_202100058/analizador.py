@@ -3,6 +3,8 @@ from Instrucciones.trigonometricas import *
 from Abstract.lexema import *
 from Abstract.numeros import *
 #from Errores.errores import *
+import graphviz 
+from graphviz import *
 
 from tkinter import *
 from tkinter import filedialog
@@ -10,6 +12,8 @@ from tkinter import messagebox as mb
 import webbrowser as wb
 from tkinter import scrolledtext as st
 import tkinter as tk
+import os
+import sys
 
 
 reserved = {
@@ -116,7 +120,7 @@ def instruccion(cadena):
             n_columna += 1
 
     #for lexema in lista_lexemas:
-    #    print(lexema)
+        #print(lexemas)
         
     return lista_lexemas
     
@@ -182,12 +186,10 @@ def operar():
         if operacion and n1 and n2:
             return Arimetica(n1,n2,operacion, f'Inicio:{operacion.getFila()}:{operacion.getColumna()}', f'Fin:{n2.getFila()}:{n2.getColumna()}')
         elif operacion and n1 and operacion.operar(None) == ('Seno' or 'Coseno' or 'Tangente'):
-            return Trigonometricas(n1,operacion,f'Inicio:{operacion.getFila()}:{operacion.getColumna()}',f'Fin:{n1.getFila()}:{n1.getColumna()}')
-           
+            return Trigonometricas(n1,operacion,f'Inicio:{operacion.getFila()}:{operacion.getColumna()}',f'Fin:{n1.getFila()}:{n1.getColumna()}')          
     return None
 
 def operar_():
-    
     global instrucciones
     while True:
         operacion = operar()
@@ -195,16 +197,12 @@ def operar_():
             instrucciones.append(operacion)
         else:
             break
-        
     for instruccion in instrucciones:
         print(instruccion.operar(None))
-
     return instrucciones
 
-
-
 def buscador():
-    filename=filedialog.askopenfilename(filetype="/", title="Select a file", filetypes=(("Text files","*.txt"),("all files", "*.*")))
+    filename=filedialog.askopenfilename(filetype="/", title="Select a file", filetypes=(("Text files","*.txt"),("all files", "*.*"),("json files", "*.json")))
     if filename!="":
         global contenido
         archi1=open(filename, "r")
@@ -225,7 +223,7 @@ def leer():
 
 
 def guardar_como():
-    filename=filedialog.asksaveasfilename(initialdir="c:/pythonya",title="Guardar como", filetypes=(("txt files", "*txt"),("Todos los archivos", "*.*")))
+    filename=filedialog.asksaveasfilename(initialdir="c:/pythonya",title="Guardar como", filetypes=(("txt files", "*txt"),("Todos los archivos", "*.*"),("json files", "*json")))
     if filename!="":
         archi1=open(filename,"w")
         archi1.write(scrolledtext1.get("1.0", tk.END))
@@ -256,10 +254,13 @@ def temasdeayuda():
     labelcarnet.place(x=175,y=75)
 
 def manualusuario():
-    wb.open_new(r"C:\Users\JUSTO\Desktop\Proyecto\Manual usuario.pdf")
+    wb.open_new(r"C:\Users\JUSTO\Desktop\-LFP-Proyecto1_202100058\Manual de Usuario.pdf")
 
 def manualtecnico():
-    wb.open_new(r"C:\Users\JUSTO\Desktop\Proyecto\Manual tecnico.pdf")
+    wb.open_new(r"C:\Users\JUSTO\Desktop\-LFP-Proyecto1_202100058\Manual Técnico.pdf")
+
+def salir():
+    ventanaprincipal.destroy()
 
 ventanaprincipal=Tk()
 ventanaprincipal.title("Ventana principal")
@@ -291,7 +292,7 @@ botonerrores=Button(ventanaprincipal, text="Errores")
 botonerrores.pack()
 botonerrores.place(x=100, y=300, width=150, height=50)
 
-botonsalir=Button(ventanaprincipal, text="Salir", command=exit)
+botonsalir=Button(ventanaprincipal, text="Salir", command=salir)
 botonsalir.pack()
 botonsalir.place(x=100, y=350, width=150, height=50)
 

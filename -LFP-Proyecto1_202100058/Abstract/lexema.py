@@ -1,4 +1,5 @@
 from Abstract.abstract import Expression
+from math import *
 
 class Lexema(Expression):
     

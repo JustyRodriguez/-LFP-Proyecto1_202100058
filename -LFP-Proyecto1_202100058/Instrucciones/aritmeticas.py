@@ -1,4 +1,5 @@
 from Abstract.abstract import Expression
+from math import *
 
 class Arimetica(Expression):
     def __init__(self,left,right,tipo, fila, columna):
@@ -28,6 +29,10 @@ class Arimetica(Expression):
             return leftValue % rightValue
         elif self.tipo.operar(arbol) == 'Potencia':
             return leftValue ** rightValue
+        elif self.tipo.operar(arbol)=="Inverso":
+            return 1/leftValue
+        elif self.tipo.operar(arbol)=="Raiz":
+            return sqrt(leftValue)
         else:
             return None
     def getFila(self):
